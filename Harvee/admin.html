@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta content="#000000" name="theme-color">
+    <meta content="@z" property="og:title">
+    <meta property="og:description" content="#1 Biolink">
+    <meta property="og:image" content="images/fbi.png">
+    <title>@z</title>
+    <link rel="stylesheet" href="public/css/global.html">
+    <link rel="stylesheet" href="css/users.css">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@1&amp;f[]=array@400&amp;display=swap" rel="stylesheet">
+    <link rel="icon" href="images/fbi.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Bungee&amp;family=Creepster&amp;family=Gloria+Hallelujah&amp;family=Permanent+Marker&amp;display=swap" rel="stylesheet">
+    <style>
+      .snowflake {
+        position: fixed;
+        top: 0;
+        font-size: 24px;
+        user-select: none;
+        pointer-events: none;
+        color: #ea03ff
+      }
+      .enter-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, .9);
+        z-index: 10;
+        cursor: pointer;
+        color: #fff;
+        text-align: center;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 25px;
+        font-weight: 700;
+        text-shadow: 0 0 15px rgba(255, 255, 255, .8);
+        transition: opacity .5s ease-in-out, visibility .5s;
+      }
+      .enter-container.fade-out {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .cursor-custom {
+        cursor: url(h.cur) 16 16, auto !important;
+      }
+      @keyframes fadeInEffect {
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body style="font-family:Satoshi,sans-serif;cursor:url('h.cur'),auto;background-color:#222">
+    <div class="enter-container" onclick="enterSite()">
+      <div class="enter-text"> Click To Enter... </div>
+    </div>
+    <img src="https://cdn.discordapp.com/attachments/1266610601245937677/1266674508211945472/222e360f956e85942f1a2958fe59519e.gif?ex=67039c90&is=67024b10&hm=b732068bdb371274924c630b1b18eeed772db1e4bc91c275460cdbbbf0a10e7b&" alt="Background" class="full-screen-gif">
+    <div class="container">
+      <div class="fixed-tips"></div>
+      <img class="avatar" src="https://media.discordapp.net/attachments/1292516819482972344/1292570799751827477/sp5derguy.jpg?ex=670437dd&is=6702e65d&hm=fbe3ae1468c158c6c891b3afec76bfac1a9b5435fd0e307e2c0435931a48dde3&=&format=webp&width=544&height=671">
+      <div class="profileLayout">
+        <h1 class="profileUsername" style="color:#fff;text-shadow:0 0 20px #fff;position:relative;background-image:url('images/sparkle.gif');background-size:200%;background-repeat:no-repeat;" onmouseover="showUIDTooltip()" onmouseout="hideUIDTooltip()">z</h1>
+        <span id="uid-tooltip" style="display:none;position:absolute;background:rgba(0,0,0,0.7);color:#fff;padding:5px;border-radius:3px;top:-30px;left:0;">UID: 1</span>
+        <div class="profileBadges">
+          <div style="display:flex" class="profileBadge crown">
+            <img src="images/crown.webp" alt="Crown Badge" width="24" height="24" style="filter: drop-shadow(0 0 1.5px #ffffff) !important;">
+          </div>
+          <div style="display:flex" class="profileBadge staff">
+            <img src="images/staff.png" alt="Staff Badge" width="24" height="24" style="filter: drop-shadow(0 0 1.5px #ffffff) !important;">
+          </div>
+          <div style="display:flex" class="profileBadge earlysupporter">
+            <img src="images/og.webp" alt="OG Badge" width="24" height="24" style="filter: drop-shadow(0 0 1.5px #ffffff) !important;">
+          </div>
+          <div style="display:flex" class="profileBadge verified">
+            <img src="images/verified.gif" alt="Verified Badge" width="24" height="24" style="filter: drop-shadow(0 0 1.5px #ffffff) !important;">
+          </div>
+          <div style="display:flex" class="profileBadge BugHunter">
+            <img src="images/bug.webp" alt="Bughunter Badge" width="24" height="24" style="filter: drop-shadow(0 0 1.5px #ffffff) !important;">
+          </div>
+        <div style="display:flex" class="profileBadge £">
+          <img src="https://cdn.discordapp.com/emojis/1279151007158370455.gif?size=96&quality=lossless" alt="£ Badge" width="24" height="24" style="filter: drop-shadow(0 0 1.5px #ffffff) !important;">
+        </div>
+        <h2 id="typingText" style="color:#fff" class="profileBio"></h2>
+        <i>
+          <div id="typingTexts" style="display:none">
+            <br>
+            <br>
+          </div>
+        </i>
+      </div>
+    </div>
+    <div style="display:none" id="curEffClr">#ffffff</div>
+    <audio id="enter-sound" src="https://cdn.discordapp.com/attachments/1292516819482972344/1292578114022539349/1215091820158124084_1289411997338701856.mp3?ex=67043ead&is=6702ed2d&hm=4279c7aceda82c70e0214474937476396d8721170754e617b9d7c83212f1489e&" loop></audio>
+    <script>
+      function enterSite() {
+        document.querySelector(".enter-container").classList.add("fade-out");
+        document.querySelector("#enter-sound").play();
+        setTimeout(() => {
+          document.querySelector(".enter-container").style.display = "none";
+        }, 500);
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const typingTextElement = document.getElementById('typingText');
+        const textsArray = document.getElementById('typingTexts').innerHTML.trim().split('<br>');
+        let textIndex = 0;
+        let charIndex = 0;
+        const typingSpeed = 100;
+        const erasingSpeed = 50;
+        const delayBetweenTexts = 1500;
+
+        function typeText() {
+          if (charIndex < textsArray[textIndex].length) {
+            typingTextElement.innerHTML += textsArray[textIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(typeText, typingSpeed);
+          } else {
+            setTimeout(eraseText, delayBetweenTexts);
+          }
+        }
+
+        function eraseText() {
+          if (charIndex > 0) {
+            typingTextElement.innerHTML = textsArray[textIndex].substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(eraseText, erasingSpeed);
+          } else {
+            textIndex = (textIndex + 1) % textsArray.length;
+            setTimeout(typeText, typingSpeed);
+          }
+        }
+
+        if (textsArray.length) typeText();
+      });
+
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U')) {
+          e.preventDefault();
+        }
+      });
+    </script>
+    <script src="../unpkg.com/cursor-effects%401.0.15/dist/browser.js"></script>
+    <script>
+      new cursoreffects.fairyDustCursor({
+        colors: ["#ffffff"]
+      });
+    </script>
+  </body>
+</html>
