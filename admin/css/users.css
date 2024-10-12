@@ -69,7 +69,7 @@ body {
 
     /* Tooltip */
     .profileUsername:hover::after {
-        content: 'UID: -69';
+        content: 'UID: 4';
         position: absolute;
         top: -25px;
         left: 20px;
