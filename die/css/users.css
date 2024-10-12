@@ -186,7 +186,7 @@ body {
     content: 'dominant';
 }
 .container .profileLayout .profileBadges .profileBadge.death:hover::before {
-    content: 'Die';
+    content: 'die';
 }
 .container .profileLayout .profileBio {
     font-weight: 570;
