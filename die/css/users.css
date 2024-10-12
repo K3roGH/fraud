@@ -179,13 +179,13 @@ body {
 .container .profileLayout .profileBadges .profileBadge.imagehost:hover::before {
     content: 'Image Host';
 }
-.container .profileLayout .profileBadges .profileBadge.him:hover::before {
+.container .profileLayout .profileBadges .profileBadge.heshim:hover::before {
     content: 'I'm him';
 }
 .container .profileLayout .profileBadges .profileBadge.dom:hover::before {
     content: 'dominant';
 }
-.container .profileLayout .profileBadges .profileBadge.die:hover::before {
+.container .profileLayout .profileBadges .profileBadge.death:hover::before {
     content: 'Die';
 }
 .container .profileLayout .profileBio {
