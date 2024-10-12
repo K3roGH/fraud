@@ -15,7 +15,7 @@
     <link rel="icon" href="images/fbi.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Bungee&amp;family=Creepster&amp;family=Gloria+Hallelujah&amp;family=Permanent+Marker&amp;display=swap" rel="stylesheet">
+
     <style>
       .snowflake {
         position: fixed;
@@ -52,10 +52,50 @@
       .cursor-custom {
         cursor: url(h.cur) 16 16, auto !important;
       }
-      @keyframes fadeInEffect {
-        to {
-          opacity: 1;
-        }
+      .volume-control {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #fff;
+      }
+      .volume-control img {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+        filter: drop-shadow(0 0 5px white);
+      }
+      input[type=range] {
+        -webkit-appearance: none;
+        width: 100px;
+        height: 8px;
+        border-radius: 5px;
+        background: #ddd;
+        outline: none;
+        opacity: 0.7;
+        transition: opacity .2s;
+      }
+      input[type=range]:hover {
+        opacity: 1;
+      }
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #ffffff;
+        cursor: pointer;
+        box-shadow: 0 0 10px white;
+      }
+      input[type=range]::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #ffffff;
+        cursor: pointer;
+        box-shadow: 0 0 10px white;
       }
     </style>
   </head>
@@ -95,8 +135,15 @@
         </i>
       </div>
     </div>
+    
+    <div class="volume-control">
+      <img id="volume-icon" src="images/volume-icon.png" alt="Volume Icon">
+      <input id="volume-slider" type="range" min="0" max="100" value="50">
+    </div>
+
     <div style="display:none" id="curEffClr">#ffffff</div>
     <audio id="enter-sound" src="media/LUCKI - Super Urus (Official Video).mp3" loop></audio>
+
     <script>
       function enterSite() {
         document.querySelector(".enter-container").classList.add("fade-out");
@@ -137,6 +184,13 @@
         }
 
         if (textsArray.length) typeText();
+
+        // Volume slider functionality
+        const volumeSlider = document.getElementById('volume-slider');
+        const audioElement = document.getElementById('enter-sound');
+        volumeSlider.addEventListener('input', function() {
+          audioElement.volume = volumeSlider.value / 100;
+        });
       });
 
       document.addEventListener('contextmenu', function(e) {
@@ -149,6 +203,7 @@
         }
       });
     </script>
+
     <script src="../unpkg.com/cursor-effects%401.0.15/dist/browser.js"></script>
     <script>
       new cursoreffects.fairyDustCursor({
