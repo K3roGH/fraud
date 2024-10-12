@@ -188,6 +188,9 @@ body {
 .container .profileLayout .profileBadges .profileBadge.death:hover::before {
     content: 'die';
 }
+.container .profileLayout .profileBadges .profileBadge.ads:hover::before {
+    content: 'ads.';
+}
 .container .profileLayout .profileBio {
     font-weight: 570;
     font-size: 17px;
