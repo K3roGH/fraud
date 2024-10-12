@@ -185,6 +185,9 @@ body {
 .container .profileLayout .profileBadges .profileBadge.dom:hover::before {
     content: 'dominant';
 }
+.container .profileLayout .profileBadges .profileBadge.die:hover::before {
+    content: 'die';
+}
 .container .profileLayout .profileBio {
     font-weight: 570;
     font-size: 17px;
